@@ -1,7 +1,10 @@
 import 'package:clean_architecture/app/app.dart';
+import 'package:clean_architecture/core/configs/dependency_injection.dart';
 import 'package:clean_architecture/features/data/datasource/auth_datasource.dart';
 import 'package:clean_architecture/features/data/repositories/auth_repository_impl.dart';
 import 'package:clean_architecture/features/domain/usecases/auth/listeauthstatus_usecase.dart';
+import 'package:clean_architecture/features/domain/usecases/auth/emailsignin_usecase.dart';
+import 'package:clean_architecture/features/domain/usecases/auth/signout_usecase.dart';
 import 'package:clean_architecture/features/presentation/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -24,14 +27,16 @@ void main() async {
   Gemini.init(
     apiKey: geminiApiKey,
   );
-
-
-  // final client = Supabase.instance.client;
-  // final authRemoteDataSource = AuthDatasourceService(client);
-  // final authRepository = AuthRepositoryImpl(authRemoteDataSource);
-  // final listenToAuthStatus = ListenToAuthStatusUseCase(authRepository);
-
+  setupDependencies();
+  
   runApp(
-    const MyApp(),
+    ChangeNotifierProvider(
+      create: (context) => AuthProvider(
+        getIt<ListenToAuthStatusUseCase>(),
+        getIt<EmailsigninUsecase>(),
+        getIt<SignOutUsecase>(),
+      ),
+      child: const MyApp(),
+    ),
   );
 }

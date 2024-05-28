@@ -14,21 +14,24 @@ class AuthGate extends StatefulWidget {
 class _AuthGateState extends State<AuthGate> {
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
-    final authState = authProvider.authState;
-
-    // Manejo de estado de carga inicial
-    if (authState == null) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
-    }
-
-    // Verificar si el usuario está autenticado
-    if (authState.session != null) {
-      return const HomePage();
-    } else {
-      return const LoginPage();
-    }
+    return Consumer<AuthProvider>(
+      builder: (context, authProvider, _) {
+        final authState = authProvider.authState;
+        if (authState == null) {
+          // Muestra un indicador de carga mientras se obtiene el estado de autenticación
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+        // Verificar si el usuario está autenticado
+        if (authState.session != null) {
+          // Si está autenticado, redirigir a la página de inicio
+          return const HomePage();
+        } else {
+          // Si no está autenticado, redirigir a la página de inicio de sesión
+          return const LoginPage();
+        }
+      },
+    );
   }
 }

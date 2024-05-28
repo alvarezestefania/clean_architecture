@@ -11,4 +11,16 @@ class AuthRepositoryImpl implements AuthGateway {
   Stream<AuthState> listenToAuthStatus() {
     return authDatasourceService.listenToAuthStatus();
   }
+  
+  @override
+  Future<AuthResponse> signInWithEmailAndPassword(String email, String password) async{
+    return await authDatasourceService.signInWithEmailAndPassword(email, password);
+  }
+
+  @override
+  Future<void> signOut() async{
+    return await authDatasourceService.signOut();
+  }
+
+
 }
