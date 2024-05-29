@@ -1,35 +1,58 @@
-import 'package:clean_architecture/features/domain/usecases/auth/listeauthstatus_usecase.dart';
+import 'package:clean_architecture/features/domain/entities/authdata_entity.dart';
 import 'package:clean_architecture/features/domain/usecases/auth/emailsignin_usecase.dart';
+import 'package:clean_architecture/features/domain/usecases/auth/listeauthstatus_usecase.dart';
 import 'package:clean_architecture/features/domain/usecases/auth/signout_usecase.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthProvider extends ChangeNotifier {
   final ListenToAuthStatusUseCase _listenToAuthStatusUseCase;
   final EmailsigninUsecase _emailsigninUsecase;
   final SignOutUsecase _signOutUsecase;
 
-  AuthState? _authState;
+  AuthDataEntity? _authState;
 
   AuthProvider(this._listenToAuthStatusUseCase, this._emailsigninUsecase,
       this._signOutUsecase) {
     _listenToAuthStatus();
   }
 
-  AuthState? get authState => _authState;
+  AuthDataEntity? get authState => _authState;
+
+  bool _hasError = false;
+  String _errorMessage = '';
+
+  bool get hasError => _hasError;
+  String get errorMessage => _errorMessage;
+
+  void _setError(String message) {
+    _hasError = true;
+    _errorMessage = message;
+    notifyListeners();
+  }
+
+  void clearError() {
+    _hasError = false;
+    _errorMessage = '';
+    notifyListeners();
+  }
 
   void _listenToAuthStatus() {
     _listenToAuthStatusUseCase().listen((authState) {
       _authState = authState;
       notifyListeners();
+    },onError: (e) {
+      _setError(e.toString());
+      notifyListeners();
     });
   }
 
   Future<void> signInWithEmail(String email, String password) async {
+    clearError();
     await _emailsigninUsecase(email, password);
   }
 
   Future<void> signOut() async {
+    clearError();
     return await _signOutUsecase();
   }
 }

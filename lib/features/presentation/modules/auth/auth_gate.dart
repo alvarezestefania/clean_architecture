@@ -18,17 +18,30 @@ class _AuthGateState extends State<AuthGate> {
       builder: (context, authProvider, _) {
         final authState = authProvider.authState;
         if (authState == null) {
-          // Muestra un indicador de carga mientras se obtiene el estado de autenticación
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         }
-        // Verificar si el usuario está autenticado
-        if (authState.session != null) {
-          // Si está autenticado, redirigir a la página de inicio
+        if(authProvider.hasError) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(authProvider.errorMessage),
+                duration: const Duration(seconds: 3), // Duración del SnackBar
+                action: SnackBarAction(
+                  label: 'Cerrar',
+                  onPressed: () {
+                    authProvider.clearError(); // Limpiar el mensaje de error
+                  },
+                ),
+              ),
+            );
+          });
+        }
+
+        if (authState.accessToken != '') {
           return const HomePage();
         } else {
-          // Si no está autenticado, redirigir a la página de inicio de sesión
           return const LoginPage();
         }
       },

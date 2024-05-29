@@ -1,6 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
-import 'package:clean_architecture/core/errors/custom_exception.dart';
 import 'package:clean_architecture/features/presentation/providers/auth_provider.dart';
 import 'package:clean_architecture/features/presentation/widgets/custom_signin_button.dart';
 import 'package:clean_architecture/features/presentation/widgets/custom_text_field.dart';
@@ -43,7 +41,11 @@ class _LoginPageState extends State<LoginPage> {
         context.push('/home');
       }
     } catch (e) {
-      throw CustomException('Error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Error inesperado. Intena nuevamente'),
+        ),
+      );
     }
   }
 

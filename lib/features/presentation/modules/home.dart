@@ -19,22 +19,35 @@ class _HomePageState extends State<HomePage> {
     _authProvider = Provider.of<AuthProvider>(context, listen: false);
   }
 
-  void signOut(BuildContext context){
+  void signOut(BuildContext context) {
     _authProvider.signOut();
     context.go('/');
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(actions: [
-        IconButton(icon: const Icon(Icons.logout),onPressed: () {
-          signOut(context);
-        },)
-      ],),
-      body: const Column(
-        children: [Text("HI AGAIN")],
-      ),
+    return Consumer<AuthProvider>(
+      builder: (context, authProvider, _) {
+        final authState = authProvider.authState!;
+        return Scaffold(
+          appBar: AppBar(
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.logout),
+                onPressed: () {
+                  signOut(context);
+                },
+              )
+            ],
+          ),
+          body: Column(
+            children: [
+              const Text("HI AGAIN"),
+              Text("email ${authState.user?.email ?? ""}"),
+            ],
+          ),
+        );
+      },
     );
   }
 }
