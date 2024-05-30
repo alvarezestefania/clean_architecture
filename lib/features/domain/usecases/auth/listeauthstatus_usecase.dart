@@ -11,7 +11,7 @@ class ListenToAuthStatusUseCase {
     try {
       return repository.listenToAuthStatus();
     } catch (e) {
-      throw CustomException('Error inesperado: ${e.toString()}');
+      throw CustomException(e.toString());
     }
   }
 }

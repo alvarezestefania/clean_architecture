@@ -11,7 +11,7 @@ class EmailsigninUsecase{
       final authResponse = await _authrepository.signInWithEmailAndPassword(email, password);
       return authResponse.user;
     } catch (e) {
-       throw CustomException('Error al iniciar sesión: $e');
+       throw CustomException('$e');
     }
   }
 }

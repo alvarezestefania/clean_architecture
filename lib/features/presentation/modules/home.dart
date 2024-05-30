@@ -1,7 +1,7 @@
-import 'package:clean_architecture/features/presentation/providers/auth_provider.dart';
+import 'package:clean_architecture/features/presentation/bloc/auth/auth_cubit.dart';
+import 'package:clean_architecture/features/presentation/bloc/auth/auth_state.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,40 +11,44 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late AuthProvider _authProvider; // Definir authProvider aquí
-
   @override
   void initState() {
     super.initState();
-    _authProvider = Provider.of<AuthProvider>(context, listen: false);
   }
 
   void signOut(BuildContext context) {
-    _authProvider.signOut();
-    context.go('/');
+    context.read<AuthCubit>().signOut();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AuthProvider>(
-      builder: (context, authProvider, _) {
-        final authState = authProvider.authState!;
-        return Scaffold(
-          appBar: AppBar(
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.logout),
-                onPressed: () {
-                  signOut(context);
-                },
-              )
-            ],
-          ),
-          body: Column(
-            children: [
-              const Text("HI AGAIN"),
-              Text("email ${authState.user?.email ?? ""}"),
-            ],
+    return BlocBuilder<AuthCubit, AppAuthState>(
+      builder: (context, state) {
+        if (state is AuthSuccess) {
+          final authData = state.authData;
+          return Scaffold(
+            appBar: AppBar(
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.logout),
+                  onPressed: () {
+                    context.read<AuthCubit>().signOut();
+                  },
+                ),
+              ],
+            ),
+            body: Column(
+              children: [
+                Text(
+                    "HI AGAIN ${authData.accessToken != '' ? "logg" : "not logged"}"),
+                Text("email ${authData.user?.email ?? ""}"),
+              ],
+            ),
+          );
+        }
+        return const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
           ),
         );
       },

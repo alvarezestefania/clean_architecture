@@ -23,7 +23,7 @@ class AuthRepositoryImpl implements AuthGateway {
     try{
       return await authDatasourceService.signInWithEmailAndPassword(email, password);
     }catch (e) {
-      throw CustomException('Error inesperado: ${e.toString()}');
+      throw CustomException(e.toString());
     }
     
   }

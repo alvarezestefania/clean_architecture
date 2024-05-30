@@ -3,11 +3,11 @@ import 'package:clean_architecture/core/configs/dependency_injection.dart';
 import 'package:clean_architecture/features/domain/usecases/auth/listeauthstatus_usecase.dart';
 import 'package:clean_architecture/features/domain/usecases/auth/emailsignin_usecase.dart';
 import 'package:clean_architecture/features/domain/usecases/auth/signout_usecase.dart';
-import 'package:clean_architecture/features/presentation/providers/auth_provider.dart';
+import 'package:clean_architecture/features/presentation/bloc/auth/auth_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
-import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
@@ -28,8 +28,8 @@ void main() async {
   setupDependencies();
   
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => AuthProvider(
+    BlocProvider(
+      create: (context) => AuthCubit(
         getIt<ListenToAuthStatusUseCase>(),
         getIt<EmailsigninUsecase>(),
         getIt<SignOutUsecase>(),

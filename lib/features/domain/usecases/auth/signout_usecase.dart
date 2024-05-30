@@ -9,7 +9,7 @@ class SignOutUsecase{
     try {
       return await _authrepository.signOut();
     } catch (e) {
-       throw CustomException('Error al iniciar sesión: $e');
+       throw CustomException('$e');
     }
   }
 }
