@@ -1,6 +1,6 @@
-// ignore_for_file: use_build_context_synchronously
+
+import 'dart:async';
 import 'package:clean_architecture/features/presentation/bloc/auth/auth_cubit.dart';
-import 'package:clean_architecture/features/presentation/bloc/auth/auth_state.dart';
 import 'package:clean_architecture/features/presentation/widgets/custom_signin_button.dart';
 import 'package:clean_architecture/features/presentation/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -20,16 +20,18 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   Future<void> signIn(SignInOptions option) async {
     if (!mounted) {
       return;
     }
-
+    if (emailController.text != "" || passwordController.text != "") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Ambos campos son obligatorios'),
+        ),
+      );
+      return;
+    }
     String email = emailController.text;
     String password = passwordController.text;
     await context.read<AuthCubit>().signInWithEmail(email, password);
@@ -38,21 +40,12 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey[200],
-        body: BlocListener<AuthCubit, AppAuthState>(
-        listener: (context, state) {
-          if (state is AuthFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.errorMessage ?? 'Error inesperado'),
-              ),
-            );
-          }
-        },
-        child: Center(
+      backgroundColor: Colors.grey[200],
+      body: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 25),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 25),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -167,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ),
-      ),
+      
     );
   }
 }
