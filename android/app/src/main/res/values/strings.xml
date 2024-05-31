@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">com.example.clean_architecture</string>
+    <string name="facebook_app_id">776910721257949</string>
+    <string name="fb_login_protocol_scheme">fb776910721257949</string>
+    <string name="facebook_client_token">c787e943b328d6a6e2e8d48b31f16cdd</string>
+</resources>

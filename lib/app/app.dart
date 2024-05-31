@@ -1,5 +1,6 @@
 import 'package:clean_architecture/core/configs/routes/router.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -7,16 +8,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final appRouter = context.watch<RouterSimpleCubit>().state;
     return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      
-      routeInformationParser: AppRouter().router.routeInformationParser,
-      routerDelegate: AppRouter().router.routerDelegate,
-      routeInformationProvider: AppRouter().router.routeInformationProvider,
+      routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
     );
   }

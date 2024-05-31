@@ -1,61 +1,41 @@
-// import 'package:clean_architecture/core/configs/routes/routes.dart';
-// import 'package:clean_architecture/features/presentation/modules/auth/auth_gate.dart';
-// import 'package:clean_architecture/features/presentation/modules/auth/login.dart';
-// import 'package:clean_architecture/features/presentation/modules/home.dart';
-// import 'package:clean_architecture/features/presentation/providers/auth_provider.dart';
-// import 'package:flutter/material.dart';
-// import 'package:go_router/go_router.dart';
-// import 'package:provider/provider.dart';
-
-// class AppRouter {
-//   final AuthProvider authProvider;
-
-//   AppRouter(this.authProvider);
-
-//   GoRouter get router => GoRouter(
-//         initialLocation: '/',
-//         routes: [
-//           GoRoute(
-//             path: '/',
-//             name: AppRoute.login.name,
-//             builder: (context, state) => const AuthGate(),
-//           ),
-//           GoRoute(
-//             path: '/home',
-//             name: AppRoute.home.name,
-//             builder: (context, state) => const HomePage(),
-//           ),
-//         ],
-//       );
-// }
-
 import 'package:clean_architecture/core/configs/routes/routes.dart';
-import 'package:clean_architecture/features/presentation/modules/auth/auth_gate.dart';
-import 'package:clean_architecture/features/presentation/modules/auth/login.dart';
-import 'package:clean_architecture/features/presentation/modules/home.dart';
+import 'package:clean_architecture/features/presentation/screens/auth/auth_gate.dart';
+import 'package:clean_architecture/features/presentation/screens/auth/login_screen.dart';
+import 'package:clean_architecture/features/presentation/screens/auth/loginwithphone/form.dart';
+import 'package:clean_architecture/features/presentation/screens/auth/loginwithphone/verify_otp.dart';
+import 'package:clean_architecture/features/presentation/screens/home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-
-class AppRouter{
-
+class AppRouter {
   GoRouter router = GoRouter(
     initialLocation: '/',
     routes: <RouteBase>[
       GoRoute(
         path: '/',
-        name: AppRoute.authGate.name,
+        name: AppRoutes.authGate.name,
         builder: (context, state) => const AuthGate(),
       ),
       GoRoute(
         path: '/login',
-        name: AppRoute.login.name,
-        builder: (context, state) => const LoginPage(),
+        name: AppRoutes.login.name,
+        builder: (context, state) => const LoginScreen(),
       ),
       GoRoute(
         path: '/home',
-        name: AppRoute.home.name,
+        name: AppRoutes.home.name,
         builder: (context, state) => const HomePage(),
+      ),
+      GoRoute(
+        path: '/phoneFormScreen',
+        name: AppRoutes.phoneFormScreen.name,
+        builder: (context, state) => const PhoneFormScreen(),
+      ),
+      GoRoute(
+        path: '/verifyOtp',
+        name: AppRoutes.verifyOtp.name,
+        builder: (context, state) => VerifyOtpScreen(phoneNumber: state.extra as String),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(
@@ -64,4 +44,18 @@ class AppRouter{
       ),
     ),
   );
+}
+
+
+class RouterSimpleCubit extends Cubit<GoRouter>{
+  RouterSimpleCubit():super(AppRouter().router);
+
+  void goAuthGate(){state.go('/');}
+  
+  void goPhoneForm(){state.push('/phoneFormScreen');}
+
+  void goVerifyOtp(String phoneNumber){state.push('/verifyOtp',extra: phoneNumber);}
+
+  void goHome(){state.push('/Home');}
+
 }

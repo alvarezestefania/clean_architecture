@@ -1,13 +1,13 @@
 import 'package:clean_architecture/core/errors/custom_exception.dart';
 import 'package:clean_architecture/features/domain/gateways/auth_gateway.dart';
 
-class SignOutUsecase{
+class FacebookSignInUsecase{
   final AuthGateway _authGateway;
-  SignOutUsecase(this._authGateway);
+  FacebookSignInUsecase(this._authGateway);
 
   Future<void> call() async {
     try {
-      return await _authGateway.signOut();
+      await _authGateway.signInWithFacebook();  
     } catch (e) {
        throw CustomException('$e');
     }

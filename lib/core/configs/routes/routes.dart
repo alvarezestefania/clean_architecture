@@ -1,5 +1,7 @@
-enum AppRoute {
+enum AppRoutes {
   login,
   home,
-  authGate
+  authGate,
+  phoneFormScreen,
+  verifyOtp
 }

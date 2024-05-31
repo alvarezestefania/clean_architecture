@@ -3,12 +3,12 @@ import 'package:clean_architecture/features/domain/gateways/auth_gateway.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class EmailsigninUsecase{
-  final AuthGateway _authrepository;
-  EmailsigninUsecase(this._authrepository);
+  final AuthGateway _authGateway;
+  EmailsigninUsecase(this._authGateway);
 
   Future<User?> call(String email, String password) async {
     try {
-      final authResponse = await _authrepository.signInWithEmailAndPassword(email, password);
+      final authResponse = await _authGateway.signInWithEmailAndPassword(email, password);
       return authResponse.user;
     } catch (e) {
        throw CustomException('$e');

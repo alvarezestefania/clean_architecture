@@ -10,6 +10,8 @@ class AuthInitial extends AppAuthState {
 
 class AuthLoading extends AppAuthState {}
 
+class AuthPhoneVerify extends AppAuthState{}
+
 class AuthSuccess extends AppAuthState {
   final AuthDataEntity authData;
   AuthSuccess(this.authData);

@@ -1,13 +1,13 @@
 import 'package:clean_architecture/core/errors/custom_exception.dart';
 import 'package:clean_architecture/features/domain/gateways/auth_gateway.dart';
 
-class SignOutUsecase{
+class VerifyPhoneSignInUsecase{
   final AuthGateway _authGateway;
-  SignOutUsecase(this._authGateway);
+  VerifyPhoneSignInUsecase(this._authGateway);
 
-  Future<void> call() async {
+  Future<void> call(String phoneNumber,String otp) async {
     try {
-      return await _authGateway.signOut();
+      await _authGateway.verifyUserPhone(phoneNumber,otp);  
     } catch (e) {
        throw CustomException('$e');
     }

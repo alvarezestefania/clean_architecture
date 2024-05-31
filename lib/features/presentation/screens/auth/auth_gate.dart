@@ -1,8 +1,8 @@
 // ignore_for_file: unrelated_type_equality_checks
 import 'package:clean_architecture/features/presentation/bloc/auth/auth_cubit.dart';
 import 'package:clean_architecture/features/presentation/bloc/auth/auth_state.dart';
-import 'package:clean_architecture/features/presentation/modules/auth/login.dart';
-import 'package:clean_architecture/features/presentation/modules/home.dart';
+import 'package:clean_architecture/features/presentation/screens/auth/login_screen.dart';
+import 'package:clean_architecture/features/presentation/screens/home.dart';
 import 'package:clean_architecture/features/presentation/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,10 +41,10 @@ class _AuthGateState extends State<AuthGate> {
             if (state.authData.accessToken.isNotEmpty) {
               return const HomePage();
             } else {
-              return const LoginPage();
+              return const LoginScreen();
             }
           } else {
-            return const LoginPage(); // Placeholder for loading or initial state
+            return const LoginScreen();
           }
         },
       ),
