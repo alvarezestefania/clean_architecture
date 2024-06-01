@@ -8,8 +8,8 @@ class CreateCustomerIfNotExistUsecase {
 
   Future<void> call(String? userId, CustomerEntity customerData) async {
     try {
-      final exists = await _customerGateway.doesCustomerExists(userId!); 
-      if (!exists) {
+      final exists = await _customerGateway.getCustomerByUserId(userId!); 
+      if (exists == null) {
         await _customerGateway.createCustomer(customerData);
       }
     } catch (e) {

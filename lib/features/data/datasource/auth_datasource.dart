@@ -18,19 +18,22 @@ class AuthDatasourceService {
           return AuthDataEntity(
               accessToken: session.accessToken,
               refreshToken: session.refreshToken ?? '',
-              user: UserModel.fromJson(session.user.toJson()).toEntity());
+              user: UserModel.fromJson(session.user.toJson()).toEntity(),
+              customerId: ""
+              );
         } else {
           return AuthDataEntity(
             accessToken: '',
             refreshToken: '',
             user: null,
+            customerId: ""
           );
         }
       });
 
       return response;
     } catch (e) {
-      throw CustomException('Error inesperado: ${e.toString()}');
+      throw CustomException('Error inesperado: ${e.toString()} ${e.hashCode}');
     }
   }
 
@@ -73,8 +76,6 @@ class AuthDatasourceService {
     try {
       await client.auth
           .signInWithOtp(phone: phoneNumber, shouldCreateUser: true);
-      // await client.auth
-      //     .signInWithPassword(password: "password", phone: phoneNumber);
     } catch (e) {
       throw CustomException('Error inesperado: ${e.toString()}');
     }

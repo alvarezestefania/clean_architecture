@@ -1,4 +1,5 @@
 import 'package:clean_architecture/core/errors/custom_exception.dart';
+import 'package:clean_architecture/features/data/models/customer_model.dart';
 import 'package:clean_architecture/features/domain/entities/customer_entity.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -6,17 +7,17 @@ class CustomerDataSourceService {
   final SupabaseClient client;
   CustomerDataSourceService(this.client);
 
-  Future<bool> doesCustomerExists(String userId) async {
+  Future<CustomerEntity?> getCustomerByUserId(String userId) async {
     try {
-      final existingCustomer = await client
+      final clientResponse = await client
           .from('customers')
           .select()
           .eq('userId', userId)
           .maybeSingle();
-      if (existingCustomer != null) {
-        return true;
+      if (clientResponse != null) {
+       return CustomerModel.fromJson(clientResponse).toEntity();   
       }
-      return false;
+      return null;
     } catch (e) {
       throw CustomException('Error al validar el cliente: ${e.toString()}');
     }

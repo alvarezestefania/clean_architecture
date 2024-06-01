@@ -11,11 +11,9 @@ class AuthRepositoryImpl implements AuthGateway {
 
   @override
   Stream<AuthDataEntity> listenToAuthStatus() {
-    try {
+    
       return authDatasourceService.listenToAuthStatus();
-    } catch (e) {
-      throw CustomException('Failed to listen to auth status');
-    }
+    
   }
   
   @override

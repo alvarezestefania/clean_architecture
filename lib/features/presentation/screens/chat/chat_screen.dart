@@ -1,20 +1,33 @@
-// ignore_for_file: unrelated_type_equality_checks
 import 'package:clean_architecture/features/presentation/bloc/authCubit/auth_cubit.dart';
 import 'package:clean_architecture/features/presentation/bloc/authCubit/auth_state.dart';
-import 'package:clean_architecture/features/presentation/screens/auth/login_screen.dart';
-import 'package:clean_architecture/features/presentation/screens/home.dart';
 import 'package:clean_architecture/features/presentation/widgets/loading.dart';
+import 'package:clean_architecture/features/presentation/widgets/message_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AuthGate extends StatefulWidget {
-  const AuthGate({super.key});
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
 
   @override
-  State<AuthGate> createState() => _AuthGateState();
+  State<ChatScreen> createState() => _ChatScreenState();
 }
 
-class _AuthGateState extends State<AuthGate> {
+class _ChatScreenState extends State<ChatScreen> {
+
+  late String _customerId;
+
+  @override
+  void initState() {
+    super.initState();
+    _customerId = _getUserIdFromAuthCubit();
+  }
+
+  String _getUserIdFromAuthCubit() {
+    final authCubit = BlocProvider.of<AuthCubit>(context);
+    final AuthSuccess successState = authCubit.state as AuthSuccess;
+    return successState.authData.customerId;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AppAuthState>(
@@ -37,15 +50,17 @@ class _AuthGateState extends State<AuthGate> {
       },
       child: BlocBuilder<AuthCubit, AppAuthState>(
         builder: (context, state) {
-          if (state is AuthSuccess) {
-            if (state.authData.accessToken.isNotEmpty) {
-              return const HomePage();
-            } else {
-              return const LoginScreen();
-            }
-          } else {
-            return const LoginScreen();
-          }
+          return Scaffold(
+            appBar: AppBar(title: const Text("Mensajeria")),
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text("LOS MENSJEAS"),
+                InputMessage(customerId: _customerId,),
+              ],
+            ),
+          );
         },
       ),
     );

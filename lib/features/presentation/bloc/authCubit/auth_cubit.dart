@@ -7,11 +7,13 @@ import 'package:clean_architecture/features/domain/usecases/auth/phonesignin_use
 import 'package:clean_architecture/features/domain/usecases/auth/signout_usecase.dart';
 import 'package:clean_architecture/features/domain/usecases/auth/verifyphone_usecase.dart';
 import 'package:clean_architecture/features/domain/usecases/customer/createcustomer_usecase.dart';
-import 'package:clean_architecture/features/presentation/bloc/auth/auth_state.dart';
+import 'package:clean_architecture/features/domain/usecases/auth/getcustomerassociateduser.dart';
+import 'package:clean_architecture/features/presentation/bloc/authCubit/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthCubit extends Cubit<AppAuthState> {
   final ListenToAuthStatusUseCase _listenToAuthStatusUseCase;
+  final GetAuthAndCustomerUseCase _getAuthAndCustomerUseCase;
   final EmailsigninUsecase _emailsigninUsecase;
   final FacebookSignInUsecase _facebookSingInUsecase;
   final GoogleSignInUsecase _googleSingInUsecase;
@@ -23,19 +25,22 @@ class AuthCubit extends Cubit<AppAuthState> {
 
   AuthCubit(
       this._listenToAuthStatusUseCase,
+      this._getAuthAndCustomerUseCase,
       this._emailsigninUsecase,
       this._facebookSingInUsecase,
       this._googleSingInUsecase,
       this._phoneSignInUsecase,
       this._verifyPhoneSignInUsecase,
       this._signOutUsecase,
-      this._createCustomerifNotExistUseCase)
+      this._createCustomerifNotExistUseCase, 
+      )
       : super(const AuthInitial()) {
     _listenToAuthStatus();
   }
 
+
   void _listenToAuthStatus() {
-    _listenToAuthStatusUseCase().listen(
+    _getAuthAndCustomerUseCase().then(
       (authData) {
         emit(AuthSuccess(authData));
       },
@@ -49,6 +54,7 @@ class AuthCubit extends Cubit<AppAuthState> {
     emit(AuthLoading());
     try {
       await _emailsigninUsecase(email, password);
+      await registerCustomerIfDoesNotExist();
       _listenToAuthStatus();
     } catch (e) {
       emit(AuthFailure(e.toString()));
@@ -79,7 +85,7 @@ class AuthCubit extends Cubit<AppAuthState> {
     emit(AuthLoading());
     try {
       await _phoneSignInUsecase(phoneNumber);
-      registerCustomerIfDoesNotExist();
+      await registerCustomerIfDoesNotExist();
       emit(AuthPhoneVerify());   
     } catch (e) {
       emit(AuthFailure(e.toString()));
@@ -96,11 +102,12 @@ class AuthCubit extends Cubit<AppAuthState> {
     }
   }
 
-  void registerCustomerIfDoesNotExist() {
+  Future<void> registerCustomerIfDoesNotExist()async{
     _listenToAuthStatus();
     _listenToAuthStatusUseCase().listen(
       (authData) {
         if (authData.user != null) {
+          print( authData.user!.id);
           _createCustomerifNotExistUseCase(
               authData.user!.id,
               CustomerEntity(

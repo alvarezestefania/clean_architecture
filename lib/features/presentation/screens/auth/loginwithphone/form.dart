@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:clean_architecture/core/configs/routes/router.dart';
-import 'package:clean_architecture/features/presentation/bloc/auth/auth_cubit.dart';
-import 'package:clean_architecture/features/presentation/bloc/auth/auth_state.dart';
+import 'package:clean_architecture/features/presentation/bloc/authCubit/auth_cubit.dart';
+import 'package:clean_architecture/features/presentation/bloc/authCubit/auth_state.dart';
 import 'package:clean_architecture/features/presentation/widgets/custom_signin_button.dart';
 import 'package:clean_architecture/features/presentation/widgets/loading.dart';
 import 'package:flutter/material.dart';

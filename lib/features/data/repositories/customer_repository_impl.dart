@@ -17,9 +17,9 @@ class CustomerRepositoryImpl implements CustomerGateway {
   }
 
   @override
-  Future<bool> doesCustomerExists(String userId) async {
+  Future<CustomerEntity?> getCustomerByUserId(String userId) async {
     try {
-      return await customerDataSourceService.doesCustomerExists(userId);
+      return await customerDataSourceService.getCustomerByUserId(userId);
     } catch (e) {
       throw CustomException(e.toString());
     }
