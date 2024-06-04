@@ -7,7 +7,6 @@ class AuthDataModel extends AuthDataEntity {
     required super.accessToken,
     required super.refreshToken,
     required UserEntity user,
-    required super.customerId
   }) : super(user: user);
 
   factory AuthDataModel.fromJson(Map<String, dynamic> json) {
@@ -15,7 +14,6 @@ class AuthDataModel extends AuthDataEntity {
       accessToken: json['accessToken'],
       refreshToken: json['refreshToken'],
       user: UserModel.fromJson(json['user']),
-      customerId: ""
     );
   }
 
@@ -32,7 +30,6 @@ class AuthDataModel extends AuthDataEntity {
       accessToken: accessToken,
       refreshToken: refreshToken,
       user: user,
-      customerId: customerId,
     );
   }
 

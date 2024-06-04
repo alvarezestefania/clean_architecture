@@ -1,5 +1,5 @@
-import 'package:clean_architecture/features/presentation/bloc/authCubit/auth_cubit.dart';
-import 'package:clean_architecture/features/presentation/bloc/authCubit/auth_state.dart';
+import 'package:clean_architecture/features/presentation/bloc/customer/customer_cubit.dart';
+import 'package:clean_architecture/features/presentation/bloc/customer/customer_state.dart';
 import 'package:clean_architecture/features/presentation/widgets/loading.dart';
 import 'package:clean_architecture/features/presentation/widgets/message_input.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,6 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-
   late String _customerId;
 
   @override
@@ -23,22 +22,22 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   String _getUserIdFromAuthCubit() {
-    final authCubit = BlocProvider.of<AuthCubit>(context);
-    final AuthSuccess successState = authCubit.state as AuthSuccess;
-    return successState.authData.customerId;
+    final customerCubit = BlocProvider.of<CustomerCubit>(context);
+    final CustomerSuccess successState = customerCubit.state as CustomerSuccess;
+    return successState.customerData.id!;
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthCubit, AppAuthState>(
+    return BlocListener<CustomerCubit, CustomerState>(
       listener: (context, state) {
-        if (state is AuthLoading) {
+        if (state is CustomerLoading) {
           LoadingOverlay.showLoadingOverlay(context);
         } else {
           LoadingOverlay.hideLoadingOverlay();
         }
 
-        if (state is AuthFailure) {
+        if (state is CustomerFailure) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -48,7 +47,7 @@ class _ChatScreenState extends State<ChatScreen> {
           });
         }
       },
-      child: BlocBuilder<AuthCubit, AppAuthState>(
+      child: BlocBuilder<CustomerCubit, CustomerState>(
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(title: const Text("Mensajeria")),
@@ -57,7 +56,9 @@ class _ChatScreenState extends State<ChatScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Text("LOS MENSJEAS"),
-                InputMessage(customerId: _customerId,),
+                InputMessage(
+                  customerId: _customerId,
+                ),
               ],
             ),
           );

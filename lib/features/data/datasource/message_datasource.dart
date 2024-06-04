@@ -30,7 +30,6 @@ class MessageDatasourceService {
 
   Future<void> registerMessage(MessageEntity messageData) async {
     try {
-      print(messageData);
       await client.from('messages').insert({
         'message': messageData.message,
         'type': messageData.type,

@@ -6,7 +6,7 @@ import 'package:clean_architecture/features/data/repositories/customer_repositor
 import 'package:clean_architecture/features/data/repositories/message_respository_impl.dart';
 import 'package:clean_architecture/features/domain/usecases/auth/emailsignin_usecase.dart';
 import 'package:clean_architecture/features/domain/usecases/auth/facebooksingin_usecase.dart';
-import 'package:clean_architecture/features/domain/usecases/auth/getcustomerassociateduser.dart';
+import 'package:clean_architecture/features/domain/usecases/customer/getcustomerassociateduser.dart';
 import 'package:clean_architecture/features/domain/usecases/auth/googlesignin_usecase.dart';
 import 'package:clean_architecture/features/domain/usecases/auth/listeauthstatus_usecase.dart';
 import 'package:clean_architecture/features/domain/usecases/auth/phonesignin_usecase.dart';
@@ -28,6 +28,8 @@ void setupDependencies() {
   getIt.registerSingleton<CustomerDataSourceService>(CustomerDataSourceService(client));
   getIt.registerSingleton<CustomerRepositoryImpl>(
       CustomerRepositoryImpl(getIt<CustomerDataSourceService>()));
+  getIt.registerSingleton<GetCustomerByUserIdUseCase>(
+      GetCustomerByUserIdUseCase(getIt<CustomerRepositoryImpl>(),));
   getIt.registerSingleton<CreateCustomerIfNotExistUsecase>(
       CreateCustomerIfNotExistUsecase(getIt<CustomerRepositoryImpl>()));
 
@@ -37,11 +39,6 @@ void setupDependencies() {
       AuthRepositoryImpl(getIt<AuthDatasourceService>()));
   getIt.registerSingleton<ListenToAuthStatusUseCase>(
       ListenToAuthStatusUseCase(getIt<AuthRepositoryImpl>()));
-  getIt.registerSingleton<GetAuthAndCustomerUseCase>(
-      GetAuthAndCustomerUseCase(
-        getIt<CustomerRepositoryImpl>(),
-        getIt<AuthRepositoryImpl>()
-      ));
   getIt.registerSingleton<EmailsigninUsecase>(
       EmailsigninUsecase(getIt<AuthRepositoryImpl>()));
   getIt.registerSingleton<FacebookSignInUsecase>(
@@ -55,6 +52,8 @@ void setupDependencies() {
   getIt.registerSingleton<SignOutUsecase>(
       SignOutUsecase(getIt<AuthRepositoryImpl>()));
 
+  
+
   //MESSAGE INJECTION DEPENDENCIES
   getIt.registerSingleton<MessageDatasourceService>(MessageDatasourceService(client));
   getIt.registerSingleton<MessageRespositoryImpl>(
@@ -66,5 +65,4 @@ void setupDependencies() {
   getIt.registerSingleton<SendMessageToAiUsecase>(
       SendMessageToAiUsecase(getIt<MessageRespositoryImpl>()));
       
-
 }

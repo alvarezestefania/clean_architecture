@@ -19,14 +19,12 @@ class AuthDatasourceService {
               accessToken: session.accessToken,
               refreshToken: session.refreshToken ?? '',
               user: UserModel.fromJson(session.user.toJson()).toEntity(),
-              customerId: ""
               );
         } else {
           return AuthDataEntity(
             accessToken: '',
             refreshToken: '',
             user: null,
-            customerId: ""
           );
         }
       });

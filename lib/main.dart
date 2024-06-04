@@ -2,7 +2,7 @@ import 'package:clean_architecture/app/app.dart';
 import 'package:clean_architecture/core/configs/dependency_injection.dart';
 import 'package:clean_architecture/core/configs/routes/router.dart';
 import 'package:clean_architecture/features/domain/usecases/auth/facebooksingin_usecase.dart';
-import 'package:clean_architecture/features/domain/usecases/auth/getcustomerassociateduser.dart';
+import 'package:clean_architecture/features/domain/usecases/customer/getcustomerassociateduser.dart';
 import 'package:clean_architecture/features/domain/usecases/auth/googlesignin_usecase.dart';
 import 'package:clean_architecture/features/domain/usecases/auth/listeauthstatus_usecase.dart';
 import 'package:clean_architecture/features/domain/usecases/auth/emailsignin_usecase.dart';
@@ -15,6 +15,7 @@ import 'package:clean_architecture/features/domain/usecases/messages/registermes
 import 'package:clean_architecture/features/domain/usecases/messages/sendMessage_usecase.dart';
 import 'package:clean_architecture/features/presentation/bloc/authCubit/auth_cubit.dart';
 import 'package:clean_architecture/features/presentation/bloc/chatCubit/chat_cubit.dart';
+import 'package:clean_architecture/features/presentation/bloc/customer/customer_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -41,16 +42,22 @@ void main() async {
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(
+        create: (context) => CustomerCubit(
+          getIt<GetCustomerByUserIdUseCase>(),
+          getIt<CreateCustomerIfNotExistUsecase>(),
+        ),
+      ),
+      BlocProvider(
         create: (context) => AuthCubit(
-            getIt<ListenToAuthStatusUseCase>(),
-            getIt<GetAuthAndCustomerUseCase>(),
-            getIt<EmailsigninUsecase>(),
-            getIt<FacebookSignInUsecase>(),
-            getIt<GoogleSignInUsecase>(),
-            getIt<PhoneSignInUsecase>(),
-            getIt<VerifyPhoneSignInUsecase>(),
-            getIt<SignOutUsecase>(),
-            getIt<CreateCustomerIfNotExistUsecase>()),
+          getIt<ListenToAuthStatusUseCase>(),
+          getIt<EmailsigninUsecase>(),
+          getIt<FacebookSignInUsecase>(),
+          getIt<GoogleSignInUsecase>(),
+          getIt<PhoneSignInUsecase>(),
+          getIt<VerifyPhoneSignInUsecase>(),
+          getIt<SignOutUsecase>(),
+          context.read<CustomerCubit>(),
+        ),
       ),
       BlocProvider(
         create: (context) => ChatCubit(
