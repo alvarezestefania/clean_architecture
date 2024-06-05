@@ -1,4 +1,4 @@
-import 'package:clean_architecture/features/domain/entities/authdata_entity.dart';
+import 'package:clean_architecture/features/domain/auth/entities/authdata_entity.dart';
 
 abstract class AppAuthState {
   const AppAuthState();

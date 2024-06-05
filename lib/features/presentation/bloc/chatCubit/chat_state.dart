@@ -1,4 +1,4 @@
-import 'package:clean_architecture/features/domain/entities/message_entity.dart';
+import 'package:clean_architecture/features/domain/message/entities/message_entity.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ChatState extends Equatable {

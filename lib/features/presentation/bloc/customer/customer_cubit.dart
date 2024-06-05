@@ -1,6 +1,6 @@
-import 'package:clean_architecture/features/domain/entities/customer_entity.dart';
-import 'package:clean_architecture/features/domain/usecases/customer/createcustomer_usecase.dart';
-import 'package:clean_architecture/features/domain/usecases/customer/getcustomerassociateduser.dart';
+import 'package:clean_architecture/features/domain/customer/entities/customer_entity.dart';
+import 'package:clean_architecture/features/domain/customer/usecases/createcustomer_usecase.dart';
+import 'package:clean_architecture/features/domain/customer/usecases/getcustomerassociateduser.dart';
 import 'package:clean_architecture/features/presentation/bloc/customer/customer_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

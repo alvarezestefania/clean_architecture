@@ -1,7 +1,7 @@
-import 'package:clean_architecture/features/domain/entities/authdata_entity.dart';
-import 'package:clean_architecture/features/domain/usecases/auth/emailsignin_usecase.dart';
-import 'package:clean_architecture/features/domain/usecases/auth/listeauthstatus_usecase.dart';
-import 'package:clean_architecture/features/domain/usecases/auth/signout_usecase.dart';
+import 'package:clean_architecture/features/domain/auth/entities/authdata_entity.dart';
+import 'package:clean_architecture/features/domain/auth/usecases/emailsignin_usecase.dart';
+import 'package:clean_architecture/features/domain/auth/usecases/listeauthstatus_usecase.dart';
+import 'package:clean_architecture/features/domain/auth/usecases/signout_usecase.dart';
 import 'package:flutter/material.dart';
 
 class AuthProvider extends ChangeNotifier {

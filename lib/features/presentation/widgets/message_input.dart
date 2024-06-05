@@ -1,4 +1,4 @@
-import 'package:clean_architecture/features/domain/entities/message_entity.dart';
+import 'package:clean_architecture/features/domain/message/entities/message_entity.dart';
 import 'package:clean_architecture/features/presentation/bloc/chatCubit/chat_cubit.dart';
 import 'package:clean_architecture/features/presentation/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';

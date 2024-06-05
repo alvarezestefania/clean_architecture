@@ -1,10 +1,10 @@
-import 'package:clean_architecture/features/domain/usecases/auth/emailsignin_usecase.dart';
-import 'package:clean_architecture/features/domain/usecases/auth/facebooksingin_usecase.dart';
-import 'package:clean_architecture/features/domain/usecases/auth/googlesignin_usecase.dart';
-import 'package:clean_architecture/features/domain/usecases/auth/listeauthstatus_usecase.dart';
-import 'package:clean_architecture/features/domain/usecases/auth/phonesignin_usecase.dart';
-import 'package:clean_architecture/features/domain/usecases/auth/signout_usecase.dart';
-import 'package:clean_architecture/features/domain/usecases/auth/verifyphone_usecase.dart';
+import 'package:clean_architecture/features/domain/auth/usecases/emailsignin_usecase.dart';
+import 'package:clean_architecture/features/domain/auth/usecases/facebooksingin_usecase.dart';
+import 'package:clean_architecture/features/domain/auth/usecases/googlesignin_usecase.dart';
+import 'package:clean_architecture/features/domain/auth/usecases/listeauthstatus_usecase.dart';
+import 'package:clean_architecture/features/domain/auth/usecases/phonesignin_usecase.dart';
+import 'package:clean_architecture/features/domain/auth/usecases/signout_usecase.dart';
+import 'package:clean_architecture/features/domain/auth/usecases/verifyphone_usecase.dart';
 import 'package:clean_architecture/features/presentation/bloc/authCubit/auth_state.dart';
 import 'package:clean_architecture/features/presentation/bloc/customer/customer_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

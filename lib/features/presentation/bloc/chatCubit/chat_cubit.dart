@@ -1,7 +1,8 @@
-import 'package:clean_architecture/features/domain/entities/message_entity.dart';
-import 'package:clean_architecture/features/domain/usecases/messages/getmessages_usecase.dart';
-import 'package:clean_architecture/features/domain/usecases/messages/registermessage_usecase.dart';
-import 'package:clean_architecture/features/domain/usecases/messages/sendMessage_usecase.dart';
+
+import 'package:clean_architecture/features/domain/message/entities/message_entity.dart';
+import 'package:clean_architecture/features/domain/message/usecases/getmessages_usecase.dart';
+import 'package:clean_architecture/features/domain/message/usecases/registermessage_usecase.dart';
+import 'package:clean_architecture/features/domain/message/usecases/sendmessage_usecase.dart';
 import 'package:clean_architecture/features/presentation/bloc/chatCubit/chat_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

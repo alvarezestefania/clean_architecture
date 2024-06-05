@@ -1,4 +1,4 @@
-import 'package:clean_architecture/features/domain/entities/customer_entity.dart';
+import 'package:clean_architecture/features/domain/customer/entities/customer_entity.dart';
 
 abstract class CustomerState {
   const CustomerState();
