@@ -4,5 +4,6 @@ enum AppRoutes {
   authGate,
   phoneFormScreen,
   verifyOtp,
-  chatPage
+  chatPage,
+  shapes
 }

@@ -5,6 +5,7 @@ import 'package:clean_architecture/features/presentation/screens/auth/loginwithp
 import 'package:clean_architecture/features/presentation/screens/auth/loginwithphone/verify_otp.dart';
 import 'package:clean_architecture/features/presentation/screens/chat/chat_screen.dart';
 import 'package:clean_architecture/features/presentation/screens/home.dart';
+import 'package:clean_architecture/features/presentation/screens/shapes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -44,6 +45,11 @@ class AppRouter {
         name: AppRoutes.chatPage.name,
         builder: (context, state) => const ChatScreen(),
       ),
+      GoRoute(
+        path: '/Shapes',
+        name: AppRoutes.shapes.name,
+        builder: (context, state) => const Shapes(),
+      ),
     ],
     errorBuilder: (context, state) => Scaffold(
       body: Center(
@@ -74,5 +80,9 @@ class RouterSimpleCubit extends Cubit<GoRouter> {
 
   void goChatPage() {
     state.push('/ChatScreen');
+  }
+
+  void goShapes() {
+    state.push('/Shapes');
   }
 }

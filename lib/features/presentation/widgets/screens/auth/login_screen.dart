@@ -14,7 +14,7 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-enum SignInOptions { email, google, facebook, number,other }
+enum SignInOptions { email, google, facebook, number }
 
 class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
@@ -39,9 +39,6 @@ class _LoginScreenState extends State<LoginScreen> {
         break;
       case SignInOptions.number:
         context.read<RouterSimpleCubit>().goPhoneForm(); 
-        break;
-      case SignInOptions.other:
-        context.read<RouterSimpleCubit>().goShapes();
         break;
     }
   }
@@ -154,17 +151,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 12,
                 ),
                 // Not a member
-                GestureDetector(
-                  onTap: () => signIn(SignInOptions.other),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Enter to shapes..."),
-                      SizedBox(
-                        width: 5,
-                      ),
-                    ],
-                  ),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Not a member?"),
+                    SizedBox(
+                      width: 5,
+                    ),
+                  ],
                 )
               ],
             ),
