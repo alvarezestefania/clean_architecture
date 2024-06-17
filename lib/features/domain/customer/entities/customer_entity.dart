@@ -8,4 +8,5 @@ class CustomerEntity {
     this.name,
     required this.userId
   });
+  
 }
