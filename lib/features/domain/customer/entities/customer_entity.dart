@@ -3,7 +3,6 @@ class CustomerEntity {
   final String? name;
   final String userId;
 
-
   CustomerEntity({
     required this.id,
     this.name,
